@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+{% load staticfiles %}
+<head>
+<meta charset="utf-8">
+<title>都不是宝贝</title>
+<meta name="keywords" content="关键词,关键词,关键词,关键词,5个关键词" />
+<meta name="description" content="网站简介，不超过80个字" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"  href="{% static 'css/index.css' %}">
+<!-- 引入monikai.css -->
+<link rel="stylesheet" href="{% static 'css/monokai.css' %}">
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}" ></script>
+<script type="text/javascript" src="{% static 'js/comm.js' %}" ></script>
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+<!--  头部导航栏 -->
+<header>
+  <div class="logo">都不是宝贝</div>
+  <div class="top-nav">
+    <h2 id="mnavh"><span class="navicon"></span></h2>
+    <ul id="nav">
+      <li><a href="{% url 'blog:index' %}">网站首页</a></li>
+      <li><a href="{% url 'blog:list' tag='python' page=1 %}">python</a></li>
+      <li><a href="{% url 'blog:list' tag='django' page=1 %}">django</a></li>
+      <li><a href="{% url 'blog:list' tag='linux' page=1 %}">linux</a></li>  
+      <li><a href="{% url 'blog:list' tag='flask' page=1 %}">flask</a></li>
+      <li><a href="{% url 'blog:list' tag='爬虫' page=1 %}">爬虫</a></li>
+      <!-- <li><a href="/4">网页设计心得</a></li>
+      <li><a href="/5">优秀个人博客</a></li> -->
+      <li><a href="{% url 'blog:vloglist' page=1 %}">关于我 </a></li>
+      <li><a href="{% url 'blog:comment' page=1 %}">留言</a></li>
+    </ul>
+  </div>
+  <div class="search">
+    <form action="/search/1" method="get" name="searchform" id="searchform">
+      <input name="keyboard" id="keyboard" class="input_text" value="搜索你喜欢的" style="color: rgb(153, 153, 153);" onfocus="if(value=='搜索你喜欢的'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='搜索你喜欢的'}" type="text">
+      <input name="show" value="title" type="hidden">
+      <input name="tempid" value="1" type="hidden">
+      <input name="tbname" value="news" type="hidden">
+      <input name="" class="input_submit" value="" type="submit">
+    </form>
+  </div>
+</header>
+<!-- 个人信息 -->
+<aside class="side">
+  <div class="about"> <i><a href="/"><img src="{% static 'images/avatar.jpg' %}"></a></i>
+    <p>都不是宝贝，一个90后有志青年！独立自主，自力更生，网络，运维，开发多方面发展。创建这个博客，用来记录自己曾经或是未来遇到的问题，分享自己的经验，方便各位友人参考学习。</p>
+    <br>
+    <p>----粗缯大布裹生涯----</p>
+    <p>----腹有诗书气自华----</p>
+  </div>
+  <div class="weixin"> <img src="{% static 'images/weixin.jpg' %}">
+    <p>关注我 么么哒！</p>
+  </div>
+</aside>
+<!-- body-->
+<main>
+{% block main %}{% endblock main %}
+{% comment %} <div class="copyright">
+    <p>Copyright 2018  Inc. AllRights Reserved. Design by <a href="javascript:;">都不是宝贝个人博客</a> 苏ICP备20025058号-1</p>
+</div> {% endcomment %}
+</main>
+<a href="#" class="cd-top cd-is-visible">Top</a>
+{% block bottomfiles %}{% endblock bottomfiles %}
+{% block bottom %}{% endblock bottom %}
+</body>
+</html>
+

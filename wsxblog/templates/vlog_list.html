@@ -1,0 +1,43 @@
+{% extends 'base_detail.html' %}
+{% load staticfiles %}
+{% block location %}
+  <a href="{% url 'blog:vloglist' page=1 %}">vlog</a>
+{% endblock location %}
+{% block body %}
+    <div class="blogbox">
+      {% comment %} 列表 {% endcomment %}
+      <div class="bloglist">
+        {% for vlog in vlogs %}
+          <li>
+            <h2><a href="{% url 'blog:vlog' vlog.id %}" target='_blank'>{{ vlog.title }}</a></h2>
+            <i><a href="{% url 'blog:vlog' vlog.id %}" target='_blank'><img src="{{ vlog.img.url }}"></a></i>
+            <p class="blogtext">{{ vlog.abstract }}</p>
+            <p class="bloginfo"><span>{{ vlog.author }}</span><span>{{ vlog.created_time }}</span></p>
+          </li>
+        {% endfor %}
+      </div>
+      {% comment %} 页码 {% endcomment %}
+      <div class="pagelist">
+        {% if vlogs.has_previous %}
+          <a title="Total record" href="{% url 'blog:vloglist'  page=vlogs.previous_page_number %}" ><b>上一页</b></a>
+        {% endif %}
+        {% for page in pages %}
+          {% if page == vlogs.number %}
+          <b>{{ page }}</b>
+          {% else %}
+            <a href="{% url 'blog:vloglist' page=page %}">{{ page }}</a>
+          {% endif %}
+        {% endfor %}
+        {% if vlogs.has_next %}
+          <a title="Total record" href="{% url 'blog:vloglist' page=vlogs.next_page_number %}" ><b>下一页</b></a>
+        {% endif %}
+          <a href="{% url 'blog:vloglist' page=num_pages %}">尾页</a>
+      </div>
+    </div>
+{% endblock body %}
+{% comment %} 热门vlog排行 {% endcomment %}
+{% block hot %}
+  {% for vlog in hot_vlogs %}
+    <li><a href="{% url 'blog:vlog' vlog.id %}"><span>{{ vlog.visiting }}</span>{{ vlog.title }}</a></li>
+  {% endfor %}
+{% endblock hot %}

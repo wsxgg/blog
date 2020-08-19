@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block main %}
+  <div class="main-content">
+    <div class="welcome">您现在的位置是：<a href='{% url "blog:index" %}'>首页</a>{% block location %}{% endblock location %}</div>
+    {% block body %}{% endblock body %}
+    <!-- 文章推荐 -->
+    <div class="rside">
+      {% block toc %}{% endblock toc %}
+      <div class="news">
+        <h2 class="newstitle"><b>文章排行</b></h2>
+          <ul>
+            {% block hot %}{% endblock hot %}
+          </ul>
+      </div>
+      {% if comment != False %}
+      <div class="news">
+        <h2 class="newstitle"><b>本栏推荐</b></h2>
+          <ul>
+            {% block comment %}{% endblock comment %}
+          </ul>
+      </div>
+      <div class="news">
+        <h2 class="newstitle"><b>栏目更新</b></h2>
+          <ul>
+            {% block new %}{% endblock new %}
+          </ul>
+      </div>
+      {% endif %}
+    </div>
+{% endblock main %}
+{% block bottomfiles %}{% endblock bottomfiles %}
+{% block bottom %}{% endblock bottom %}

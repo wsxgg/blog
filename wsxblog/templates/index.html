@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<main>
+{% block main %}
+  <div class="main-content">
+    <div class="welcome"> 您好，欢迎您访问都不是宝贝的个人博客！ </div>
+    <!-- 精品博客 -->
+    <div class="picbox">
+      <h2 class="pictitle"><a href="/">精品推荐</a></h2>
+      <!--box begin-->
+      <div class="Box_con"> <span class="btnl btn" id="btnl"></span> <span class="btnr btn" id="btnr"></span>
+        <div class="conbox" id="BoxUl">
+          <ul>
+            {% for top_blog in top_blogs %}
+            <li class="cur"><a href="{% url 'blog:detail' top_blog.id %}"><img src="{{ top_blog.img.url }}" alt=""/><p>{{ top_blog.title }}</p></a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <!--box end--> 
+    </div>
+    <!-- 博客分类 -->
+    <div class="newsbox">
+      {% for tags,blogs in all_blogs.items %}
+        <section>
+          <div class="news">
+            <h2 class="newstitle"><span><a href="{% url 'blog:list' tag=tags.name page=1 %}">更多</a></span><b>{{ tags.name }}</b></h2>
+            <ul>
+            {% for blog in blogs %}
+              <li><a href="{% url 'blog:detail' blog.id %}"><span>{{ blog.created_time|date:'y-m-d' }}</span>{{ blog.title }}</a></li>
+            {% endfor %}
+            </ul>
+          </div>
+        </section>
+      {% endfor %}
+    </div>
+    <div class="blank"></div>
+    <!-- 底部推荐  -->
+    <div class="links">
+      <h2 class="linktitle">友情推荐</h2>
+      <ul class="link-text">
+        <li><a href="http://www.zsythink.net/">朱双印个人博客</a></li>
+        <li><a href="https://www.liaoxuefeng.com/wiki/1016959663602400">廖雪峰主页</a></li>
+        <li><a href="https://blog.csdn.net/weixin_42180497">都不是宝贝CSDN</a></li>
+      </ul>
+    </div>  
+{% endblock main %}
+</main>
+
