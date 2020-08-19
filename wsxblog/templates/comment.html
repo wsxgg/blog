@@ -1,0 +1,43 @@
+{% extends 'base_detail.html' %}
+{% load staticfiles %}
+{% block location %}
+  ><a href="{% url 'blog:comment' page=1 %}">留言</a>
+{% endblock location %}
+{% block body %}
+    <div class="blogbox">
+      <div class="bloglist">
+        <a href="{% url "blog:newcomment" %}" style="border:1px,solid,green; background:#3D2; width:140px; height:55px; 
+          display:block; border-radius:14px; font-size:26px; line-height:55px; text-align:center; margin-bottom:10px; margin-left:10px; margin-top:10px;">新建留言</a>
+        <ul>
+          {% for comment in comments %}
+          <li>
+            <h2 style="border-top:1px solid #eee; border-bottom:0px;">{{ comment.name }}<div class="right" style="float:right;font-size:13px;margin-right:10px;">{{ comment.created_time }}</div></h2>
+            <p class="blogtext" style="margin-left:30px;">{{ comment.body }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="pagelist">
+        {% if comments.has_previous %}
+          <a title="Total record" href="{% url 'blog:comment' page=comments.previous_page_number %}?keyboard={{ keyboard }}" ><b>上一页</b></a>
+        {% endif %}
+        {% for page in pages %}
+          {% if page == comments.number %}
+          <b>{{ page }}</b>
+          {% else %}
+            <a href="{% url 'blog:comment' page=page %}">{{ page }}</a>
+          {% endif %}
+        {% endfor %}
+        {% if comments.has_next %}
+          <a title="Total record" href="{% url 'blog:comment' page=comments.next_page_number %}"><b>下一页</b></a>
+        {% endif %}
+        <a href="{% url 'blog:comment' page=num_pages %}">尾页</a>
+      </div>
+    </div>
+{% endblock body %}
+{% comment %} 热门文章排行 {% endcomment %}
+{% block hot %}
+  {% for blog in hot_blogs %}
+    <li><a href="{% url 'blog:detail' blog.id %}"><span>{{ blog.visiting }}</span>{{ blog.title }}</a></li>
+  {% endfor %}
+{% endblock hot %}

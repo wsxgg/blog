@@ -1,0 +1,55 @@
+{% extends 'base_detail.html' %}
+{% load staticfiles %}
+{% block location %}
+  ><a href="{% url 'blog:list' tag=tag page=1 %}">{{ tag }}</a>
+{% endblock location %}
+{% block body %}
+    <div class="blogbox">
+      <div class="bloglist">
+        <ul>
+          {% for blog in blogs %}
+          <li>
+            <h2><a href="{% url 'blog:detail' blog.id %}" target='_blank'>{{ blog.title }}</a></h2>
+            <i><a href="{% url 'blog:detail' blog.id %}" target='_blank'><img src="{{ blog.img.url }}"></a></i>
+            <p class="blogtext">{{ blog.abstract }}</p>
+            <p class="bloginfo"><span>{{ blog.author }}</span><span>{{ blog.created_time }}</span><span>{{ blog.tags.name }}</span></p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="pagelist">
+      {% if blogs.has_previous %}
+        <a title="Total record" href="{% url 'blog:list' tag=tag page=blogs.previous_page_number %}" ><b>上一页</b></a>
+      {% endif %}
+      {% for page in pages %}
+        {% if page == blogs.number %}
+         <b>{{ page }}</b>
+        {% else %}
+          <a href="{% url 'blog:list' tag=tag page=page %}">{{ page }}</a>
+        {% endif %}
+      {% endfor %}
+      {% if blogs.has_next %}
+        <a title="Total record" href="{% url 'blog:list' tag=tag page=blogs.next_page_number %}" ><b>下一页</b></a>
+      {% endif %}
+        <a href="{% url 'blog:list' tag=tag page=num_pages %}">尾页</a>
+      </div>
+    </div>
+{% endblock body %}
+{% comment %} 最热门排行 {% endcomment %}
+{% block hot %}
+  {% for blog in hot_blogs %}
+    <li><a href="{% url 'blog:detail' blog.id %}"><span>{{ blog.visiting }}</span>{{ blog.title }}</a></li>
+  {% endfor %}
+{% endblock hot %}
+{% comment %} 专栏热门推荐 {% endcomment %}
+{% block comment %}
+  {% for blog in tag_top_blogs %}
+    <li><a href="{% url 'blog:detail' blog.id %}"><span>{{ blog.visiting  }}</span>{{ blog.title }}</a></li>
+  {% endfor %}
+{% endblock comment %}
+{% comment %} 专栏最新推荐 {% endcomment %}
+{% block new %}
+  {% for blog in tag_new_blogs %}
+    <li><a href="{% url 'blog:detail' blog.id %}"><span>{{ blog.created_time|date:'y-m-d' }}</span>{{ blog.title }}</a></li>
+  {% endfor %}
+{% endblock new %}
